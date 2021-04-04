@@ -1,0 +1,82 @@
+
+body {
+    margin: 0;
+}
+
+.header {
+    display: flex;
+    border-bottom: 1px solid black;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 10%;
+}
+
+.header span {
+    font-size: 15px;
+    color: gray;
+}
+
+.header h1 {
+    margin-block: 5px;
+}
+
+.header h1::first-letter {
+    color: #D2691E;
+}
+
+.header img {
+    width: 10%;
+    min-width: 150px;
+    max-width: 250px;
+    margin: 5px 5px 5px 5%;
+    border: 2px solid #D2691E;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+}
+
+.mars_card {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    border: 2px solid #FFA500;
+    border-radius: 10px;
+    width: 40%;
+}
+
+.mars_card button{
+    align-self: flex-end;
+    outline: none;
+    background: #FFA500;
+    padding: 5px;
+    margin: 15px;
+    border-radius: 5px;
+    border: 1px solid white;
+    color: white;
+    min-width: 50px;
+}
+
+.mars_card button:hover{
+    background: #D2691E;
+}
+
+.mars_card button:active{
+    background: white;
+    border-color: #FFA500;
+    color: #FFA500;
+}
+
+.mars_stat {
+    display: grid;
+    margin-top: 15px;
+    align-content: center;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.mars_stat div {
+    padding: 10px 10px 10px 20px;
+}

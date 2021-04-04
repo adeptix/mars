@@ -1,4 +1,4 @@
-const dataFromMars = [
+const allData = [
     {
         date: '1 июля 2020 г.',
         temperature: '-70,7 ° F',
@@ -13,10 +13,30 @@ const dataFromMars = [
     },
 ]
 
+let t = document.querySelector('#card_tml')
+let wr = document.querySelector('.wrapper')
+
+
+class MarsInfo {
+    constructor(info) {
+        let clone = document.importNode(t.content, true);
+        clone.querySelector('button').addEventListener('click', () => {
+            console.log(info)
+        })
+
+        clone.querySelector('.date').textContent += info.date
+        clone.querySelector('.tmp').textContent += info.temperature
+        clone.querySelector('.wind').textContent += info.windspeed
+        clone.querySelector('.press').textContent += info.pressure
+
+        wr.appendChild(clone);
+    }
+}
+
 function postData(data) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            dataFromMars.push(data)
+            allData.push(data)
             resolve()
         }, 1500)
     })
@@ -24,10 +44,12 @@ function postData(data) {
 
 function getData() {
     setTimeout(() => {
-        dataFromMars.forEach((dataFromMars) => {
+        allData.forEach((dataFromMars) => {
             console.log(
                 `${dataFromMars.date}, ${dataFromMars.temperature}, ${dataFromMars.windspeed}, ${dataFromMars.pressure}`
             )
+
+            new MarsInfo(dataFromMars)
         })
     }, 1000)
 }
