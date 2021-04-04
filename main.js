@@ -13,15 +13,18 @@ const allData = [
     },
 ]
 
-let t = document.querySelector('#card_tml')
-let wr = document.querySelector('.wrapper')
+const t = document.querySelector('#card_tmpl')
+const wr = document.querySelector('.wrapper')
+
+const loader = document.querySelector('.loader')
 
 
 class MarsInfo {
     constructor(info) {
-        let clone = document.importNode(t.content, true);
+        const clone = document.importNode(t.content, true);
         clone.querySelector('button').addEventListener('click', () => {
-            console.log(info)
+            const {date, ...otherData} = info
+            console.log({date, otherData})
         })
 
         clone.querySelector('.date').textContent += info.date
@@ -31,6 +34,14 @@ class MarsInfo {
 
         wr.appendChild(clone);
     }
+}
+
+function stopLoader() {
+    loader.remove()
+}
+
+function showError(error) {
+    wr.innerHTML = `<div class="error_msg">error on load: ${error}</div>`
 }
 
 function postData(data) {
@@ -44,21 +55,35 @@ function postData(data) {
 
 function getData() {
     setTimeout(() => {
-        allData.forEach((dataFromMars) => {
-            console.log(
-                `${dataFromMars.date}, ${dataFromMars.temperature}, ${dataFromMars.windspeed}, ${dataFromMars.pressure}`
-            )
+        stopLoader()
 
+        allData.forEach((dataFromMars) => {
             new MarsInfo(dataFromMars)
         })
     }, 1000)
 }
 
-postData(
-    {
-        date: '3 июля 2020 г.',
-        temperature: '-70,7 ° F',
-        windspeed: '11,5 миль/ч',
-        pressure: '766,9  ПА',
+// you can throw your error
+function throwError(){
+    throw 'my error'
+}
+
+(async () => {
+    try {
+
+        let post = await postData(
+            {
+                date: '3 июля 2020 г.',
+                temperature: '-70,7 ° F',
+                windspeed: '11,5 миль/ч',
+                pressure: '766,9  ПА',
+            }
+        )
+
+        getData()
+
+    } catch (error) {
+        stopLoader()
+        showError(error)
     }
-).then(getData)
+})()
